@@ -284,7 +284,7 @@ def _get_batch_df(batch_ids, event_data, fault_data):
 
 
 def get_batch_stop_cats(
-        batch_data, event_data, scada_data, grid_col, maint_col, rep_col,
+        batch_data, event_data,
         grid_cval=0, maint_cval=0, rep_cval=0):
     """
     Labels the batches with an assumed stop category, based on the stop
@@ -336,26 +336,26 @@ def get_batch_stop_cats(
 
     # get stop categories
     most_common_cats = get_most_common_cats(root_cats)
-    grid_ids = get_cat_present_ids(root_cats, 'grid')
-    grid_counter_ids = get_counter_active_ids(
-        batch_data_sc, scada_data, grid_col, counter_value=grid_cval)
-    grid_ids = grid_ids.append(grid_counter_ids).drop_duplicates()
-    sensor_ids = get_cat_present_ids(root_cats, 'sensor')
-    maint_ids = get_counter_active_ids(
-        batch_data_sc, scada_data, maint_col, counter_value=maint_cval)
+    #grid_ids = get_cat_present_ids(root_cats, 'grid')
+    #grid_counter_ids = get_counter_active_ids(
+     #   batch_data_sc, scada_data, grid_col, counter_value=grid_cval)
+    #grid_ids = grid_ids.append(grid_counter_ids).drop_duplicates()
+    #sensor_ids = get_cat_present_ids(root_cats, 'sensor')
+    #maint_ids = get_counter_active_ids(
+     #   batch_data_sc, scada_data, maint_col, counter_value=maint_cval)
     all_normal_ids = get_cat_all_ids(root_cats, 'ok')
 
     batch_data_sc['batch_cat'] = most_common_cats
     batch_data_sc.loc[all_normal_ids, 'batch_cat'] = 'ok'
-    batch_data_sc.loc[sensor_ids, 'batch_cat'] = 'sensor'
-    batch_data_sc.loc[grid_ids, 'batch_cat'] = 'grid'
-    batch_data_sc.loc[maint_ids, 'batch_cat'] = 'maintenance'
+    #batch_data_sc.loc[sensor_ids, 'batch_cat'] = 'sensor'
+    #batch_data_sc.loc[grid_ids, 'batch_cat'] = 'grid'
+    #batch_data_sc.loc[maint_ids, 'batch_cat'] = 'maintenance'
 
-    # find when repaird were carried out
-    repair_ids = get_counter_active_ids(
-        batch_data_sc, scada_data, rep_col, counter_value=rep_cval)
-    batch_data_sc['repair'] = False
-    batch_data_sc.loc[repair_ids, 'repair'] = True
+    # find when repairs were carried out
+    #repair_ids = get_counter_active_ids(
+     #   batch_data_sc, scada_data, rep_col, counter_value=rep_cval)
+    #batch_data_sc['repair'] = False
+    #batch_data_sc.loc[repair_ids, 'repair'] = True
 
     return batch_data_sc
 

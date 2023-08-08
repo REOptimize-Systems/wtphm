@@ -448,7 +448,7 @@ def get_cat_all_ids(root_cats, cat):
         in the ``root_cats``
     """
     cat_ids = []
-    for i, c in root_cats.iteritems():
+    for i, c in root_cats.items():
         if set(c) == set([cat]):
             cat_ids.append(i)
     return pd.Index(cat_ids)

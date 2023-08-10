@@ -150,7 +150,7 @@ def _drop_batches(scada_data, oth_batches_to_drop, drop_type, pre_stop_lims):
 
 
 def _get_stoppage_ids(fault_batches, scada_data_l):
-    stoppage_ids = pd.Int64Index([])
+    stoppage_ids = pd.Index([], dtype=np.int64)
     stoppage_batch_ids = {}
     for b in fault_batches.itertuples():
         start = (b.start_time + pd.Timedelta('5 minutes')).round('10T')
@@ -164,7 +164,7 @@ def _get_stoppage_ids(fault_batches, scada_data_l):
 
 
 def _get_pre_stop_ids(fault_batches, scada_data_l, pre_stop_lims):
-    pre_stop_ids = pd.Int64Index([])
+    pre_stop_ids = pd.Index([], dtype=np.int64)
     pre_stop_batch_ids = {}
     for b in fault_batches.itertuples():
         start = (b.start_time + pd.Timedelta('5 minutes')).round('10T')
